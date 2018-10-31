@@ -1,6 +1,7 @@
 package br.com.thiago.mongodb.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.thiago.mongodb.domain.User;
+import br.com.thiago.mongodb.dto.UserDTO;
 import br.com.thiago.mongodb.services.UserService;
 
 @RestController
@@ -18,9 +20,10 @@ public class UserController {
 	private UserService service;
 
 	@GetMapping
-	public ResponseEntity<List<User>> findAll() {
-		List<User> all = service.findAll();
-		return ResponseEntity.ok().body(all);
+	public ResponseEntity<?> findAll() {
+		List<User> users = service.findAll();
+		List<UserDTO> usersDto = users.stream().map(u -> new UserDTO(u)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(usersDto);
 	}
 
 }
