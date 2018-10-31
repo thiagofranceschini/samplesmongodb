@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +27,17 @@ public class UserController {
 		List<User> users = service.findAll();
 		List<UserDTO> usersDto = users.stream().map(u -> new UserDTO(u)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(usersDto);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> findById(@PathVariable String id) {
+		if (!StringUtils.isEmpty(id)) {
+			User user = service.findById(id);
+			UserDTO dto = new UserDTO(user);
+			return ResponseEntity.status(HttpStatus.OK).body(dto);
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Identificador invalido:" + id);
+		}
 	}
 
 }
