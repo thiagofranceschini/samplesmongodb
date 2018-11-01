@@ -1,5 +1,7 @@
 package br.com.thiago.mongodb.controller;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +35,20 @@ public class PostController {
 		}
 	}
 
-	@GetMapping("/titlesearch")
-	public ResponseEntity<?> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
-		text = UrlUtils.decodedParam(text);
-		List<Post> list = service.searchByTitle(text);
-		return ResponseEntity.status(HttpStatus.OK).body(list);
+	@GetMapping("/fullsearch")
+	public ResponseEntity<?> fullSearch(@RequestParam(value = "text", defaultValue = "") String text,
+			@RequestParam(value = "minDate", defaultValue = "") String minDate,
+			@RequestParam(value = "maxDate", defaultValue = "") String maxDate) {
+		String decodedText = UrlUtils.decodedParam(text);
+		Date min = UrlUtils.dateConverter(minDate, new Date(0L));
+		Date max = UrlUtils.dateConverter(maxDate, new Date());
+		List<Post> list;
+		try {
+			list = service.fullSearch(decodedText, min, max);
+			return ResponseEntity.status(HttpStatus.OK).body(list);
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 
 }

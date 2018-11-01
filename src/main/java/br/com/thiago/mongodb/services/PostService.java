@@ -1,5 +1,7 @@
 package br.com.thiago.mongodb.services;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,4 +26,10 @@ public class PostService {
 	public List<Post> searchByTitle(String title) {
 		return repository.findByTitleContainingIgnoreCase(title);
 	}
+
+	public List<Post> fullSearch(String text, Date minDate, Date maxDate) throws ParseException {
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+		return repository.fullSearch(text, minDate, maxDate);
+	}
+	
 }

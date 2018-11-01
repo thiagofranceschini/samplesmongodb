@@ -37,15 +37,15 @@ public class Instantiation implements CommandLineRunner {
 
 		repository.saveAll(Arrays.asList(lorena, thiago, thamires));
 
-		Post post1 = new Post(null, dateFormat.parse("21/03/2019"), "Partiu Canadá", "Primeira visita!!!",
+		Post post1 = new Post(null, dateFormat.parse("21/03/2018"), "Partiu Canadá", "Primeira visita!!!",
 				new AuthorDTO(thiago));
-		Post post2 = new Post(null, dateFormat.parse("07/10/2019"), "Surpresa Amor", "Susto no amor",
+		Post post2 = new Post(null, dateFormat.parse("07/10/2018"), "Surpresa Amor", "Susto no amor",
 				new AuthorDTO(thamires));
 
-		CommentDTO comment1 = new CommentDTO("Boa Viagem!", dateFormat.parse("21/03/2019"), new AuthorDTO(lorena));
-		CommentDTO comment2 = new CommentDTO("traga charope de maple!", dateFormat.parse("22/03/2019"), new AuthorDTO(lorena));
-		CommentDTO comment3 = new CommentDTO("voce me mata do coração", dateFormat.parse("07/10/2019"), new AuthorDTO(thiago));
-		CommentDTO comment4 = new CommentDTO("O bolo estava bom!", dateFormat.parse("08/10/2019"), new AuthorDTO(lorena));
+		CommentDTO comment1 = new CommentDTO("Boa Viagem!", dateFormat.parse("21/03/2018"), new AuthorDTO(lorena));
+		CommentDTO comment2 = new CommentDTO("traga charope de maple!", dateFormat.parse("22/03/2018"), new AuthorDTO(lorena));
+		CommentDTO comment3 = new CommentDTO("voce me mata do coração", dateFormat.parse("07/10/2018"), new AuthorDTO(thiago));
+		CommentDTO comment4 = new CommentDTO("O bolo estava bom!", dateFormat.parse("08/10/2018"), new AuthorDTO(lorena));
 		
 		post1.getComments().addAll(Arrays.asList(comment1, comment2));
 		post2.getComments().addAll(Arrays.asList(comment3, comment4));
