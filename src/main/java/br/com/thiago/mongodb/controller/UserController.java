@@ -58,7 +58,7 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parâmetro Usuário Invalido");
 		}
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody UserDTO dto, @PathVariable String id) {
 		if (!ObjectUtils.isEmpty(dto)) {
@@ -78,6 +78,16 @@ public class UserController {
 			return ResponseEntity.noContent().build();
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Parametro Usuário Invalido");
+		}
+	}
+
+	@GetMapping("/{id}/posts")
+	public ResponseEntity<?> findPosts(@PathVariable String id) {
+		if (!StringUtils.isEmpty(id)) {
+			User user = service.findById(id);
+			return ResponseEntity.status(HttpStatus.OK).body(user.getPosts());
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Identificador invalido:" + id);
 		}
 	}
 
